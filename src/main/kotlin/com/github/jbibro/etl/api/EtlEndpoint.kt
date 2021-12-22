@@ -1,9 +1,5 @@
 package com.github.jbibro.etl.api
 
-import com.github.jbibro.etl.domain.Aggregation.AVG
-import com.github.jbibro.etl.domain.Aggregation.MAX
-import com.github.jbibro.etl.domain.Aggregation.MIN
-import com.github.jbibro.etl.domain.Aggregation.SUM
 import com.github.jbibro.etl.domain.EtlService
 import com.github.jbibro.etl.domain.Filter
 import com.github.jbibro.etl.domain.Query
@@ -22,12 +18,10 @@ class EtlEndpoint(private val etlService: EtlService) {
 
         val query = request.let {
             Query(
-                aggregations = mapOf(
-                    MIN to it.min,
-                    MAX to it.max,
-                    SUM to it.sum,
-                    AVG to it.avg,
-                ),
+                min = it.min,
+                max = it.max,
+                avg = it.avg,
+                sum = it.sum,
                 groupBy = it.groupBy,
                 filters = it.filters.map { s ->
                     val (field, operator, value) = s.split("")
