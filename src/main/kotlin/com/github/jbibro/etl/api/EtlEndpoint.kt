@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/analyze")
 class EtlEndpoint(private val etlService: EtlService) {
 
-    @GetMapping("/", produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     fun analyze(request: Request): ResponseEntity<String> {
 
         val query = request.let { r ->
