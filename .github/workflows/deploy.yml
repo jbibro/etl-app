@@ -34,7 +34,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v0
         with:
           service: ${{ env.SERVICE }}
-          image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
+          image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:latest
           region: ${{ env.REGION }}
 
       - name: Show Output
