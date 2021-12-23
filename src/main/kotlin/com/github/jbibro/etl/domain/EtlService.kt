@@ -17,10 +17,10 @@ class EtlService(private val create: DSLContext) {
     fun execute(query: Query): String {
 
         val conditions = query.filters.map {
-            when (it.operator) {
-                "eq" -> field(it.field).eq(it.value)
-                "le" -> field(it.field).le(it.value)
-                "gt" -> field(it.field).gt(it.value)
+            when (it.operator()) {
+                "eq" -> field(it.field()).eq(it.value())
+                "le" -> field(it.field()).le(it.value())
+                "ge" -> field(it.field()).ge(it.value())
                 else -> trueCondition()
             }
         }
@@ -56,9 +56,18 @@ data class Query(
     val filters: List<Filter>
 )
 
+@JvmInline
+value class Filter(private val s: String) {
 
-data class Filter(
-    val field: String,
-    val operator: String,
-    val value: String
-)
+    init {
+        require(s.split(".").size == 3)
+    }
+
+    private val parts: List<String>
+        get() = s.split(".")
+
+
+    fun field() = parts[0]
+    fun operator() = parts[1]
+    fun value() = parts[2]
+}

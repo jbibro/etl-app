@@ -16,17 +16,14 @@ class EtlEndpoint(private val etlService: EtlService) {
     @GetMapping("/", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun analyze(request: Request): ResponseEntity<String> {
 
-        val query = request.let {
+        val query = request.let { r ->
             Query(
-                min = it.min,
-                max = it.max,
-                avg = it.avg,
-                sum = it.sum,
-                groupBy = it.groupBy,
-                filters = it.filters.map { s ->
-                    val (field, operator, value) = s.split("")
-                    return@map Filter(field ,operator, value)
-                }
+                min = r.min,
+                max = r.max,
+                avg = r.avg,
+                sum = r.sum,
+                groupBy = r.groupBy,
+                filters = r.filters.map { Filter(it) }
             )
         }
 
