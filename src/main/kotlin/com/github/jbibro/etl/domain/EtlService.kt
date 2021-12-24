@@ -16,33 +16,40 @@ class EtlService(private val create: DSLContext) {
 
     fun execute(query: Query): String {
 
-        val conditions = query.filters.map {
-            when (it.operator()) {
-                "eq" -> field(it.field()).eq(it.value())
-                "le" -> field(it.field()).le(it.value())
-                "ge" -> field(it.field()).ge(it.value())
-                else -> trueCondition()
-            }
-        }
+        val selects = selects(query)
+        val conditions = conditions(query)
+        val groupBy = groupBy(query)
 
-        return with(query) {
-            create
-                .select(min.map { min(field(it)).`as`("min $it") })
-                .select(max.map { max(field(it)).`as`("max $it") })
-                .select(sum.map {
-                    sum(field(it, Double::class.java)).cast(Double::class.java).`as`("sum $it")
-                })
-                .select(avg.map {
-                    avg(field(it, Double::class.java)).cast(Double::class.java).`as`("avg $it")
-                })
-                .select(groupBy.map { field(it) })
-                .from("campaigns")
-                .where(conditions)
-                .groupBy(groupBy.map { field(it) })
-                .fetch()
-                .formatJSON(DEFAULT_FOR_RECORDS.recordFormat(JSONFormat.RecordFormat.OBJECT))
+        return create
+            .select(selects)
+            .select(groupBy)
+            .from("campaigns")
+            .where(conditions)
+            .groupBy(groupBy)
+            .fetch()
+            .formatJSON(DEFAULT_FOR_RECORDS.recordFormat(JSONFormat.RecordFormat.OBJECT))
+    }
+
+    private fun selects(query: Query) = with(query) {
+        listOf(
+            min.map { min(field(it)).`as`("min $it") },
+            max.map { max(field(it)).`as`("max $it") },
+            avg.map { avg(field(it, Double::class.java)).cast(Double::class.java).`as`("avg $it") },
+            sum.map { sum(field(it, Double::class.java)).cast(Double::class.java).`as`("sum $it") }
+        )
+            .flatten()
+    }
+
+    private fun conditions(query: Query) = query.filters.map {
+        when (it.operator()) {
+            "eq" -> field(it.field()).eq(it.value())
+            "le" -> field(it.field()).le(it.value())
+            "ge" -> field(it.field()).ge(it.value())
+            else -> trueCondition()
         }
     }
+
+    private fun groupBy(query: Query) = query.groupBy.map { field(it) }
 }
 
 data class Query(

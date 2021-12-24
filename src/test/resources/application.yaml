@@ -2,8 +2,8 @@ spring:
   datasource:
     url: jdbc:duckdb:/tmp/test
     driver-class-name: org.duckdb.DuckDBDriver
-#  sql:
-#    init:
-#      mode: always
-#  jooq:
-#    sql-dialect: postgres
+  sql:
+    init:
+      mode: always
+  jooq:
+    sql-dialect: postgres

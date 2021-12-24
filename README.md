@@ -15,7 +15,7 @@ Alternatively application can be run on docker
 ```
 - Start containers
 ```
-docker run -p 8080:8080  etl
+docker run -p 8080:8080 etl
 ```
 
 ## API
@@ -31,7 +31,7 @@ docker run -p 8080:8080  etl
 | min | get minimum value for selected metrics, e.g. `min=clicks,ctr`  |
 | max | get maximum value for selected metrics, e.g. `max=impressinons,ctr`  |
 | sum | get total value for selected metrics, e.g. `sum=clicks,ctr,impressions`  |
-| avg | get average value for selected metrics, e.g. `min=clicks,ctr`  |
+| avg | get average value for selected metrics, e.g. `avg=clicks,ctr`  |
 | groupBy | group by selected dimensions, e.g. `groupBy=datasource,campaign`  |
 | filters | list of dimension filters in the following format: `field.operator.value`, e.g. `Daily.le.2019-12-05`. Possible operators are `eq`, `le` and `ge`   |
 
