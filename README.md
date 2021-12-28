@@ -6,6 +6,7 @@
 ```
 ./gradlew bootRun
 ```
+Use java 11 or higher.
 
 Alternatively application can be run on docker
 
@@ -39,7 +40,7 @@ docker run -p 8080:8080 etl
 
 ### Get the highest clicks, impressions and average ctr grouped by Datasource between 2019-12-01 and 2019-12-03
 ```javascript
-GET /analyze?max=clicks,impressions&avg=ctr&groupBy=Datasource&filters=Daily.ge.2019-12-01&filters=Daily.le.2019-12-30
+GET /analyze?max=clicks,impressions&avg=ctr&groupBy=Datasource&filters=Daily.ge.2019-12-01&filters=Daily.le.2019-12-03
 [
     {
         "max clicks": 256,
