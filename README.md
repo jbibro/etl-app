@@ -38,9 +38,9 @@ docker run -p 8080:8080 etl
 
 ## Example
 
-### Get the highest clicks, impressions and average ctr grouped by Datasource between 2019-12-01 and 2019-12-03
+### Get the highest clicks, impressions and average ctr grouped by Datasource between 2019-12-01 and 2019-12-30
 ```javascript
-GET /analyze?max=clicks,impressions&avg=ctr&groupBy=Datasource&filters=Daily.ge.2019-12-01&filters=Daily.le.2019-12-03
+GET /analyze?max=clicks,impressions&avg=ctr&groupBy=Datasource&filters=Daily.ge.2019-12-01&filters=Daily.le.2019-12-30
 [
     {
         "max clicks": 256,
