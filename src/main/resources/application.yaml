@@ -7,3 +7,9 @@ spring:
       mode: always
   jooq:
     sql-dialect: postgres
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
