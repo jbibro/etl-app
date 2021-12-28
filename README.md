@@ -13,7 +13,7 @@ Alternatively application can be run on docker
 ```
 ./gradlew jibDockerBuild --image etl
 ```
-- Start containers
+- Start container
 ```
 docker run -p 8080:8080 etl
 ```
